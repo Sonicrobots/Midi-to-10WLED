@@ -20241,11 +20241,11 @@ wire to board 2.54 mm (.1 inch) pitch header</description>
 <sheet>
 <plain>
 <text x="149.86" y="124.46" size="1.778" layer="91"></text>
-<text x="360.68" y="363.22" size="5.08" layer="91">8 Fach LED Treiber 10W Stage Edition
+<text x="360.68" y="363.22" size="5.08" layer="91">8 Fach LED Driver 10W Stage Edition
 - TLC5940, Atmega, 
-- 8-Fach LED Treiber
+- 8-channel LED driver
 - Midi In and Through
-</text>
+moritz@sonicrobots.com</text>
 <text x="256.54" y="347.98" size="1.016" layer="91">Arduino Pin 12</text>
 <text x="256.54" y="345.44" size="1.27" layer="91">Arduino Pin 11</text>
 <text x="304.8" y="60.96" size="1.778" layer="91">Dreh-Codierschalter 

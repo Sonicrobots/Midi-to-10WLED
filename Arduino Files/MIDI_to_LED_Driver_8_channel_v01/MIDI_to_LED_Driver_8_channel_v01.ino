@@ -8,7 +8,8 @@
 // \__/ \__/ |  \|_|_\__  |  \ \__/ |__/ \__/  |  \__/
 //
 // Contributors: Moritz Simon Geist, LennartS
-// 22 April 2017
+// 05 Mai 2017
+// V.012
 //
 // === Recources: ===
 // 1. Create and edit logarithmic Value lists: https://docs.google.com/spreadsheets/d/1KdJeNoF1NuLTvQSDkJnCvIzLNUSvrxJJv9CtxnRS0rM/edit#gid=0
@@ -90,81 +91,70 @@ void step() {
 }
 
 
-
-uint8_t readMidiChannel() // Readout the coded switch on PIN 2,3,4,7 on Startup. To set the MIDI Channel (1-16)
-{
-  // set pins as inputs
-  pinMode(2, INPUT_PULLUP);pinMode(7, INPUT_PULLUP);pinMode(4, INPUT_PULLUP);pinMode(3, INPUT_PULLUP); // the pins for the coded channel switch with build in PULLUP resistors
-
-  uint8_t i=0;
-  bitWrite(i, 0, !digitalRead(3));
-  bitWrite(i, 1, !digitalRead(7));
-  bitWrite(i, 2, !digitalRead(2));
-  bitWrite(i, 3, !digitalRead(4));
-
-  return i; //+1 .. nullausgleich
-}
-
 // EDIT this section to map the incoming MIDI-Notes to the appropriate TLC5940 Channel
 
 void HandleNoteOn(byte channel, byte note, byte velocity)
 {          
-
+  digitalWrite(13, HIGH);   // turn the LED on (HIGH is the voltage level)
+  
+  
   switch (note) {
-    case 88:       // Midi Note 2 goes to ..
+    case 36:       // Midi Note 2 goes to ..
       startFade(1);     // 
       
       break;
     
-    case 89: 			// Midi Note goes to ..
+    case 37: 			// Midi Note goes to ..
       startFade(2); 		// 
       
       break;
 
-    case 90:       // Midi Note goes to ..
+    case 38:       // Midi Note goes to ..
       startFade(3);     // 
       
     break;
     
-    case 91: 			// Midi Note XX goes to ..
+    case 40: 			// Midi Note XX goes to ..
       startFade(4); 		// .. TLC Channel  BD Real
       
       break;
       
-    case 92: 			// Midi Note XX goes to ..
+    case 41: 			// Midi Note XX goes to ..
       startFade(5);     // .. TLC Channel  BD Real
       
       break;
       
-    case 93: 			// Midi Note XX goes to ..
+    case 42: 			// Midi Note XX goes to ..
       startFade(6); 		// .. TLC Channel 3 FP 2
       
       break;
 
-    case 94: 			// Midi Note XX goes to ..
+    case 43: 			// Midi Note XX goes to ..
       startFade(7);     // .. TLC Channel 3 FP 2
       
       break;
 
-    case 95: 			// Midi Note XX goes to ..
+    case 44: 			// Midi Note XX goes to ..
       startFade(8); 		// .. TLC Channel .. 
       break;
-
-
-    
-  }
   
+  }
+}
 
 
+void HandleNoteOff(byte channel, byte note, byte velocity)
+{
+  digitalWrite(13, LOW);   // turn the LED on (HIGH is the voltage level)
 }
 
 
 void setup() {
-  MIDI.setHandleNoteOn(HandleNoteOn); // 
+  pinMode(13, OUTPUT);
+        MIDI.setHandleNoteOn(HandleNoteOn); // 
+        MIDI.setHandleNoteOff(HandleNoteOff);
   Tlc.init();
   resetStates();
-    // MIDI.begin(readMidiChannel());  // listens on only channel which is set up with the coded switch
-    MIDI.begin(); 
+  MIDI.begin();
   startAllFades();
 
 }
